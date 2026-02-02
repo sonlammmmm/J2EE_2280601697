@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:custom="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{_layout}">
+<html lang="vi"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:custom="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{_layout}">
 
 <head>
     <meta charset="UTF-8">
-    <title>List products</title>
+    <title>Danh sách sản phẩm</title>
 </head>
 
 <body>
@@ -15,17 +15,17 @@
 
     <a th:href="@{/products/create}"
        class="btn btn-primary mb-3">
-        Create New Product
+        Tạo sản phẩm mới
     </a>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Image</th>
-            <th scope="col">Category Name</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Ảnh</th>
+            <th scope="col">Danh mục</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -39,19 +39,19 @@
                 <img height="120"
                      width="150"
                      th:src="@{/images/} + ${product.image}"
-                     alt="Product Image">
+                     alt="Ảnh sản phẩm">
             </td>
             <td th:text="${product.category?.name ?: ''}"></td>
             <td>
                 <a th:href="@{/products/edit/{id}(id=${product.id})}"
                    class="btn btn-secondary">
-                    Edit
+                    Sửa
                 </a>
 
                 <a th:href="@{/products/delete/{id}(id=${product.id})}"
                    custom:linkMethod="post"
                    class="btn btn-danger">
-                    Delete
+                    Xóa
                 </a>
             </td>
         </tr>

@@ -1,7 +1,9 @@
 package com.example.lab04.controller;
 
 import com.example.lab04.model.Product;
+import com.example.lab04.model.Category;
 import com.example.lab04.service.ProductService;
+import com.example.lab04.service.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,7 @@ public class ProductController {
     public String create(
             @Valid Product newProduct,
             BindingResult result,
-            @RequestParam("category_id") int categoryId,
+            @RequestParam(value = "category_id", required = false) Integer categoryIdParam,
             @RequestParam("imageProduct") MultipartFile imageProduct,
             Model model
     ) {
@@ -51,7 +53,14 @@ public class ProductController {
             return "product/create";
         }
 
-        productService.updateImage(newProduct, imageProduct); // Xử lý ảnh
+        productService.updateImage(newProduct, imageProduct);
+
+        int categoryId = 0;
+        if (newProduct.getCategory() != null && newProduct.getCategory().getId() != 0) {
+            categoryId = newProduct.getCategory().getId();
+        } else if (categoryIdParam != null) {
+            categoryId = categoryIdParam;
+        }
 
         Category selectedCategory = categoryService.get(categoryId);
         newProduct.setCategory(selectedCategory);
@@ -66,7 +75,7 @@ public class ProductController {
         Product find = productService.get(id);
 
         if (find == null) {
-            return "error/404"; // Trang lỗi tuỳ chỉnh
+            return "error/404";
         }
 
         model.addAttribute("product", find);
@@ -89,10 +98,10 @@ public class ProductController {
         }
 
         if (imageProduct != null && !imageProduct.isEmpty()) {
-            productService.updateImage(editProduct, imageProduct); // Cập nhật ảnh nếu có
+            productService.updateImage(editProduct, imageProduct); 
         }
 
-        productService.update(editProduct); // Cập nhật sản phẩm
+        productService.update(editProduct);
         return "redirect:/products";
     }
 }

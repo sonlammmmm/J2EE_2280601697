@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="vi"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description"
-          content="BigSchool - Home page with courses and search functionality"/>
+        content="Ứng dụng demo quản lý sản phẩm"/>
 
-    <title>Demo Products</title>
+    <title>Demo Sản phẩm</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -22,18 +22,18 @@
 
 <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div style="padding-left: 40px">
-        <a class="navbar-brand" th:href="@{/products}">Home</a>
-        <a class="navbar-brand" th:href="@{/products/create}">Products</a>
+        <a class="navbar-brand" th:href="@{/products}">Trang chủ</a>
+        <a class="navbar-brand" th:href="@{/products/create}">Tạo sản phẩm</a>
     </div>
 
     <form class="d-flex" role="search"
           th:action="@{/home/search}" th:method="get">
         <input class="form-control me-2"
                type="search"
-               placeholder="Search"
-               aria-label="Search">
+               placeholder="Tìm kiếm"
+               aria-label="Tìm kiếm">
         <button class="btn btn-outline-success" type="submit">
-            Search
+            Tìm
         </button>
     </form>
 </nav>
