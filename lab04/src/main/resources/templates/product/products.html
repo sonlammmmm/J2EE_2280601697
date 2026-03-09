@@ -1,63 +1,92 @@
 <!DOCTYPE html>
-<html lang="en"
+
+<html lang="vi"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:custom="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{_layout}">
+      layout:decorate="~{product/_layout}"></html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>List products</title>
-</head>
+<div layout:fragment="content">
 
-<body>
-<div layout:fragment="content" class="container body-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="m-0 text-primary fw-bold"><i class="bi bi-box2-fill me-2"></i>Danh Sách Sản Phẩm</h3>
+        <a class="btn btn-primary" th:href="@{/products/create}">
+            <i class="bi bi-plus-circle me-1"></i>Thêm Sản Phẩm Mới
+        </a>
+    </div>
 
-    <a th:href="@{/products/create}"
-       class="btn btn-primary mb-3">
-        Create New Product
-    </a>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Image</th>
-            <th scope="col">Category Name</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
+                    <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">ID</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Hình Ảnh</th>
+                        <th>Danh Mục</th>
+                        <th class="text-center pe-3">Thao Tác</th>
+                    </tr>
+                    </thead>
 
-        <tbody>
-        <tr th:each="product : ${listproduct}">
-            <th scope="row" th:text="${product.id}"></th>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td>
-                <img height="120"
-                     width="150"
-                     th:src="@{/images/} + ${product.image}"
-                     alt="Product Image">
-            </td>
-            <td th:text="${product.category?.name ?: ''}"></td>
-            <td>
-                <a th:href="@{/products/edit/{id}(id=${product.id})}"
-                   class="btn btn-secondary">
-                    Edit
-                </a>
+                    <tbody>
 
-                <a th:href="@{/products/delete/{id}(id=${product.id})}"
-                   custom:linkMethod="post"
-                   class="btn btn-danger">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    <tr th:if="${products.size() == 0}">
+                        <td colspan="6" class="text-center py-5 text-muted italic">
+                            <i class="bi bi-inbox-fill d-block fs-1"></i>
+                            Không tìm thấy sản phẩm nào
+                        </td>
+                    </tr>
+
+                    <tr th:each="p : ${products}">
+
+                        <td class="ps-3" th:text="${p.id}"></td>
+
+                        <td class="fw-medium text-dark" th:text="${p.name}"></td>
+
+                        <td class="text-danger fw-bold" th:text="${#numbers.formatCurrency(p.price)}"></td>
+
+                        <td>
+                            <img th:if="${p.image != null}"
+                                 th:src="@{'/images/' + ${p.image}}"
+                                 class="rounded border shadow-sm"
+                                 width="80"
+                                 alt="Product image">
+                            <img th:unless="${p.image != null}"
+                                 src="https://placehold.co/80x80?text=No+Image"
+                                 class="rounded border shadow-sm"
+                                 width="80"
+                                 alt="No image">
+                        </td>
+
+                        <td>
+                            <span class="badge bg-info text-dark" th:text="${p.category != null ? p.category.name : 'N/A'}"></span>
+                        </td>
+
+                        <td class="text-center pe-3">
+                            <div class="btn-group">
+                                <a th:href="@{/products/edit/{id}(id=${p.id})}"
+                                   class="btn btn-outline-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Sửa
+                                </a>
+                                <a th:href="@{/products/delete/{id}(id=${p.id})}"
+                                   class="btn btn-outline-danger btn-sm"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
 
 </div>
-</body>
+
 </html>
