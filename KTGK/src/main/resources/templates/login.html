@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập – Edu Course Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="auth-page">
+    <div class="auth-box">
+
+        <!-- Brand -->
+        <div class="text-center mb-4">
+            <a th:href="@{/home}" style="color:var(--accent);font-size:1.5rem;text-decoration:none;">
+                <i class="bi bi-mortarboard-fill"></i>
+            </a>
+            <h2 class="mt-2" style="font-size:1.375rem;font-weight:700;letter-spacing:-.02em;">Đăng nhập</h2>
+            <p style="font-size:.875rem;color:var(--muted);margin:.25rem 0 0;">Chào mừng quay lại hệ thống.</p>
+        </div>
+
+        <!-- Alerts -->
+        <div th:if="${param.error}" class="alert-strip alert-danger-strip">
+            <i class="bi bi-exclamation-circle-fill"></i> Tên đăng nhập hoặc mật khẩu không đúng.
+        </div>
+        <div th:if="${param.logout}" class="alert-strip alert-success-strip">
+            <i class="bi bi-check-circle-fill"></i> Đã đăng xuất thành công.
+        </div>
+        <div th:if="${success}" class="alert-strip alert-success-strip">
+            <i class="bi bi-check-circle-fill"></i> <span th:text="${success}"></span>
+        </div>
+
+        <!-- Form -->
+        <form th:action="@{/login}" method="post">
+            <div class="field">
+                <label for="username">Tên đăng nhập</label>
+                <div class="input-icon">
+                    <i class="bi bi-person"></i>
+                    <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required autofocus>
+                </div>
+            </div>
+            <div class="field">
+                <label for="password">Mật khẩu</label>
+                <div class="input-icon">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary-dark w-100 mt-1">
+                Đăng nhập
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="d-flex align-items-center gap-2 my-3">
+            <hr style="flex:1;border-color:var(--border);margin:0;">
+            <span style="font-size:.75rem;color:var(--muted);">hoặc</span>
+            <hr style="flex:1;border-color:var(--border);margin:0;">
+        </div>
+
+        <!-- Google -->
+        <a th:href="@{/oauth2/authorization/google}"
+           class="btn btn-ghost w-100 d-flex align-items-center justify-content-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Đăng nhập bằng Google
+        </a>
+
+        <p class="text-center mt-3" style="font-size:.8125rem;color:var(--muted);">
+            Chưa có tài khoản?
+            <a th:href="@{/register}" style="color:var(--text);font-weight:600;text-decoration:none;">Đăng ký ngay</a>
+        </p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
