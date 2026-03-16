@@ -40,4 +40,15 @@ public class EnrollmentService {
     public boolean isEnrolled(Student student, Course course) {
         return enrollmentRepository.existsByStudentAndCourse(student, course);
     }
+
+    public void cancelEnrollment(Student student, Long enrollmentId) {
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy thông tin đăng ký"));
+
+        if (!enrollment.getStudent().getStudentId().equals(student.getStudentId())) {
+            throw new RuntimeException("Bạn không có quyền hủy đăng ký này");
+        }
+
+        enrollmentRepository.delete(enrollment);
+    }
 }

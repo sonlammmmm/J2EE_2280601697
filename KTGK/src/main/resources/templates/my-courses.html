@@ -58,6 +58,16 @@
                   th:text="${enrollments.size()} + ' học phần'"></span>
         </div>
 
+        <!-- Alert messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <!-- Table -->
         <div th:if="${enrollments != null && !enrollments.isEmpty()}" class="table-card">
             <table class="table table-hover mb-0">
@@ -69,6 +79,7 @@
                     <th>Tín chỉ</th>
                     <th>Giảng viên</th>
                     <th>Ngày đăng ký</th>
+                    <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,6 +98,14 @@
                         th:text="${enrollment.course.lecturer != null && !enrollment.course.lecturer.isEmpty()} ? ${enrollment.course.lecturer} : '—'">
                     </td>
                     <td style="color:var(--muted);font-size:.8125rem;" th:text="${enrollment.enrollDate}"></td>
+                    <td>
+                        <form th:action="@{/enroll/cancel/{id}(id=${enrollment.id})}" method="post"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn hủy đăng ký học phần này?')">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-x-circle me-1"></i> Hủy
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

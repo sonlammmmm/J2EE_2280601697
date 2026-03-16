@@ -44,4 +44,18 @@ public class EnrollmentController {
         model.addAttribute("enrollments", enrollments);
         return "my-courses";
     }
+
+    @PostMapping("/enroll/cancel/{enrollmentId}")
+    @PreAuthorize("hasRole('STUDENT')")
+    public String cancelEnrollment(@PathVariable Long enrollmentId, Principal principal, RedirectAttributes redirectAttributes) {
+        Student student = studentService.findByUsername(principal.getName())
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        try {
+            enrollmentService.cancelEnrollment(student, enrollmentId);
+            redirectAttributes.addFlashAttribute("success", "Hủy đăng ký học phần thành công!");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/enroll/my-courses";
+    }
 }
